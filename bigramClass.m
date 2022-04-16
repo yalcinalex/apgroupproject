@@ -35,7 +35,7 @@ classdef bigramClass < handle
             disp('Building a bigram model...')
             tbl = zeros(length(unig));          % build bigram table
             for i = 1:length(big)
-                tokens = strsplit(big{i});      % split bigram to tokens
+                tokens = strsplit(big{i}, self.delimiters);  %% change
                 prev = tokens{1};               % previous word
                 next = tokens{2};               % next word
                 row = strcmp(unig, prev);       % index of the previous

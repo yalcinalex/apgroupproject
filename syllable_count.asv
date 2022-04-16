@@ -1,0 +1,12 @@
+% syllable counts for words
+function cnt = syllable_count(word)
+    % finds the word in datamuse most similar to the given word, and its
+    % syllable count. Prints to output if there is a difference.
+    api_word = webread("https://api.datamuse.com/words?sp="+string(word)+"&md=s&max=1");
+    % error handling
+    if (isempty(api_word))
+        fprintf("error: %s has no matches\n")
+    if (string(api_word.word) ~= string(word))
+        fprintf("error: %s matched to %s\n", string(word), string(api_word.word));
+    end
+end

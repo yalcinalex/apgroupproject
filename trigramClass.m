@@ -38,7 +38,7 @@ classdef trigramClass < bigramClass
             tbl = zeros(length(big), ...        % build trigram table 
                 length(unig));
             for i = 1:length(trig)
-                tokens = strsplit(trig{i});     % split trigram to tokens
+                tokens = strsplit(trig{i}, self.delimiters);     %% change
                 prev = strjoin(tokens(1:2),' ');% join the first two
                 next = tokens{3};               % next word
                 row = strcmp(big, prev);        % index of the previous
