@@ -1,4 +1,6 @@
+% Several instances of punctuation (_, -, ") are not handled well, so are
+% removed. This returns a boolean value of whether removal is necessary.
 function isBadPunc = is_bad_punc(chara)
-    isBadPunc = (chara == 34) || (chara == 39) || (chara == 95) || ...
-    (chara == 8212) || (chara == 45) || (chara == 40) || (chara == 41);
+    isBadPunc = (chara == '"') || (chara == '''') || (chara == '_') || ...
+    (chara == '—') || (chara == '-') || (chara == '(') || (chara == ')');
 end

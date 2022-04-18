@@ -10,19 +10,19 @@ function proc = postprocess_cstm(raw)
     % punctuation, spaces after first " and before second "
     i = 1; j = 1; % indeces of rawtext and proc
     n = length(rawtext);
-    temp = blanks(n);
+    temp = blanks(n); % temporary array for storing before proc defined at end
     quote = 0; % boolean for currently in quote
     while i < n
         % newline check: all newlines are doubled, removes half
-        if (rawtext(i) == 10)
+        if (rawtext(i) == newline)
             temp(j) = rawtext(i);
             i = i+2; % skip newline and space
             j = j+1;
         % spaces before punctuation
-        elseif (rawtext(i) == 32 && is_punc(rawtext(i+1)))
+        elseif (rawtext(i) == ' ' && is_punc(rawtext(i+1)))
             % check quote mark
             if (rawtext(i+1) == 34)
-                if (quote) % endquote
+                if (quote) % this quote mark is endquote
                     temp(j) = rawtext(i+1);
                     i = i+2; % skip space before "
                     j = j+1; % supports punctuation after endquote
@@ -42,5 +42,5 @@ function proc = postprocess_cstm(raw)
             i = i+1; j = j+1;
         end
     end
-    proc = temp(1:j-1);
+    proc = temp(1:j-1); % shorten processed text to best length
 end

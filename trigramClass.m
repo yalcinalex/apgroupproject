@@ -13,9 +13,9 @@ classdef trigramClass < bigramClass
     methods
         % constructor
         function self = trigramClass(delimiters, parser)
-            if nargin == 1;
+            if nargin == 1
                 parser = @ngrams;               % n-gram generator
-            elseif nargin == 0;
+            elseif nargin == 0
                 delimiters = {' '};             % default delimiter is whitespace
                 parser = @ngrams;               % n-gram generator
             end
@@ -38,7 +38,7 @@ classdef trigramClass < bigramClass
             tbl = zeros(length(big), ...        % build trigram table 
                 length(unig));
             for i = 1:length(trig)
-                tokens = strsplit(trig{i}, self.delimiters);     %% change
+                tokens = strsplit(trig{i}, self.delimiters); %% change: needs to use its own delimiters
                 prev = strjoin(tokens(1:2),' ');% join the first two
                 next = tokens{3};               % next word
                 row = strcmp(big, prev);        % index of the previous

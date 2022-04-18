@@ -1,23 +1,21 @@
+% removes annoying punctuation that makes the output of textGen less
+% readable.
 function good = preprocess_cstm3(raw)
-    i=1; j=1;
+    i=1; j=1; % indices of raw and temp, respectively
     n = length(raw);
     temp = blanks(n);
     while (i <= n)
-        if is_bad_punc(raw(i))
-            if (raw(i) == 39)
-                if (is_letter(raw(i-1)) && is_letter(raw(i+1)))
-                    temp(j) = raw(i);
-                    j=j+1; i=i+1;
-                else
-                    i=i+1;
-                end
-            else
-                i=i+1;
-            end
+        % checks for non apostrophe bad punctuation, and skips it
+        if is_bad_punc(raw(i)) && raw(i) ~= ''''
+            i = i+1;
+        % checks for apostrophes that are not part of contractions
+        elseif raw(i) == '''' && ~(is_letter(raw(i-1)) && is_letter(raw(i+1)))
+            i = i+1;
+        % otherwise, passed
         else
             temp(j) = raw(i);
             j=j+1; i=i+1;
         end
     end
-    good = temp(1:j-1);
+    good = temp(1:j-1); % without unnecessary spacing at the end
 end

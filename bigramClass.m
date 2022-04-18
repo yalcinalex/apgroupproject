@@ -35,7 +35,8 @@ classdef bigramClass < handle
             disp('Building a bigram model...')
             tbl = zeros(length(unig));          % build bigram table
             for i = 1:length(big)
-                tokens = strsplit(big{i}, self.delimiters);  %% change
+                tokens = strsplit(big{i}, self.delimiters);  %% change: referencing the delimiters passed to the function is necessary
+                                                              % proper parsing
                 prev = tokens{1};               % previous word
                 next = tokens{2};               % next word
                 row = strcmp(unig, prev);       % index of the previous
@@ -54,43 +55,14 @@ classdef bigramClass < handle
             self.uniCount = unic;
         end
         
-        % =======your code here======
+        % generates the probability of a given sentence occuring
         function prob = score(self, sentence, delimiters)
-            % starter code you should replace
             sentence = lower(sentence);
             tokens = strsplit(sentence, delimiters);
             row = strcmp(tokens(1), self.unigrams);
             col = strcmp(tokens(2), self.unigrams);
             prob = self.mdl(row, col);
-        end
-        % =======end your code======
-        
-        % generates a text file for use with Wordle
-        % http://www.wordle.net/advanced
-        function wordle(self, stopwords)
-            if nargin == 1
-                url =...                        % source file URL
-                    'http://www.textfixer.com/resources/common-english-words.txt';
-                stopwords = webread(url);       % read the sourrce file
-                stopwords = strsplit(...        % tokenize it
-                    stopwords, ',');
-            end
-            words = self.unigrams;              % get words
-            counts = self.uniCount;             % get counts
-            drop = ismember(words, ...          % remove stopwords, etc.
-                [stopwords {'<s>', '</s>'}]);
-            words(drop) = [];   
-            counts(drop) = [];
-            
-            f = fopen('words.txt', 'w');        % write to text file
-            for i = 1:length(words)             % row by row
-                fprintf(f,'%s:%d\n', ...        % foramt is 'word:count'
-                    words{i}, counts(i));
-            end
-            fclose(f);                          % close the file
-            
-        end
+        end        
     end
-    
 end
     
