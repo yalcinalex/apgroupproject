@@ -33,9 +33,14 @@ function [nextw, index] = nextWord_cstm(prev, mdl, mode)
                                       % based on probabilities
                                       % round it to an integer           
     csum = [0 cumsum(samples)];       % cumulative sum of samples
-    pick = randsample(csum(end), 1);  % randomly pick a sample
-    idx = find(csum >= pick, 1);      % find where it falls in csum
-    nextw = candidates{idx - 1};      % get the corresponding word
-    index = cand_index{idx-1};        % get the corresponding index
+    try
+        pick = randsample(csum(end), 1);  % randomly pick a sample
+        idx = find(csum >= pick, 1);      % find where it falls in csum
+        nextw = candidates{idx - 1};      % get the corresponding word
+        index = cand_index{idx-1};        % get the corresponding index
+    catch
+        nextw = newline;
+        index = 1;
+    end
 end
 

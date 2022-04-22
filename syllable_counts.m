@@ -17,5 +17,6 @@ function counts = syllable_counts(words)
         else
             counts(i) = syllable_count(words{i}, 1, i);
         end
+        %fprintf('%s | %i\n', words{i}, counts(i));
     end
 end
