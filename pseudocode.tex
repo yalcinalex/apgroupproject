@@ -1,0 +1,75 @@
+ \documentclass{article}
+ \usepackage{listings}
+\usepackage{caption}
+
+\begin{document}
+ \lstset{language=Matlab, tabsize=4}
+
+%textGen_cstm
+\begin{lstlisting}
+while (generating sentences)
+	Sentence starts with \n
+	if (is a bigram model)
+		while (sentence not finished)
+			Add nextWord(previous word, bigram model) to sentence
+		end
+	else (is a trigram)
+		Add nextWord(previous word, bigram model) to sentence
+		while (sentence not finished)
+			Add nextWord(previous 2 words, trigram model) to sentence
+		end
+	end
+	Store sentence and prepare next
+end
+\end{lstlisting}
+
+%part 3.8 (bigram hitting times)
+\begin{lstlisting}
+Assign p_matrix as 2 to last rows and columns of bigram p_matrix
+Assign t_words as inv(I-p_matrix) * (1 vector)
+Assign exp_length as p_matrix(row 1, all columns) * t_words
+\end{lstlisting}
+
+%part 3.9 (trigram hitting times)
+\begin{lstlisting}
+Generate trigram model p_mat
+for i as bigrams list index
+	if (word 2 in bigram i is newline)
+		Remove row and column i from p_mat
+	end
+end
+
+Assign t_tri as inv(I-p_mat) * (1 vector)
+
+Assign exp_length_tri as 0
+for i as bigrams list index
+	if (word 1 in bigram i is newline)
+		Add p_mat(1,newline row) * t_tri(i) to exp_length_tri
+	end
+end
+\end{lstlisting}
+
+%syll_count and syll_counts
+\begin{lstlisting}
+for i as index of unigram list
+	Assign api_word as webread(``https://api.datamuse.com/words?sp=''+word(i)+``&md=s&max=1'')
+	Assign syllable count as api_word.numSyllables
+end
+\end{lstlisting}
+
+%corpus_syll_counts
+\begin{lstlisting}
+Assign corpus_syll_counts as 0
+for i as corpus line index
+	for j as word index in line
+		Add syllable count of word(j) to corpus_syll_counts(i)
+	end
+end
+\end{lstlisting}
+
+%markov model generation
+\begin{lstlisting}
+% idk
+\end{lstlisting}
+
+ \end{document}
